@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="chat-container" id="chat-section">
+
+    <div class="chat-header">
+        Delivery Support 💬
+    </div>
+
+    <div id="chat-box" class="chat-box">
+
+        <div class="chat-message bot">
+            Hello! How can I help you today?
+        </div>
+
+        <div class="quick-actions">
+            <button class="quick-btn" onclick="quickIssue('Missing Item')">
+                Missing Item
+            </button>
+
+            <button class="quick-btn" onclick="quickIssue('Wrong Order')">
+                Wrong Order
+            </button>
+        </div>
+
+    </div>
+
+    <div class="chat-form">
+
+        <select id="issue">
+            <option value="">Select Issue</option>
+            <option>Missing Item</option>
+            <option>Wrong Order</option>
+            <option>Late Delivery</option>
+            <option>Damaged Item</option>
+        </select>
+
+        <input type="text" id="order_id" placeholder="Enter Order ID">
+
+        <label for="image" class="file-label">📎 Upload Image</label>
+        <input type="file" id="image" hidden>
+
+        <button onclick="submitIssue()">Submit</button>
+
+        <!-- ✅ TRACK -->
+        <a href="#" class="track-btn" onclick="openTrack()">Track Ticket →</a>
+
+        <!-- ✅ CLEAR CHAT -->
+        <button onclick="clearChat()" class="clear-btn">🗑 Clear Chat</button>
+
+    </div>
+
+</div>
+
+<!-- TRACK SECTION -->
+<div id="track-section" class="track-section" style="display:none;">
+
+    <h3>Track Your Ticket 🔍</h3>
+
+    <input type="text" id="track_id" placeholder="Enter Ticket ID">
+    <button onclick="trackTicket()">Track</button>
+
+    <div id="result"></div>
+
+    <button onclick="closeTrack()">⬅ Back to Chat</button>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+{% endblock %}

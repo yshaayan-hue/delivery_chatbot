@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h2>Ticket Details</h2>
+
+<div id="ticketDetails">Loading...</div>
+
+<script>
+const ticketId = "{{ ticket_id }}";
+
+fetch(`/api/ticket/${ticketId}`)
+.then(res => res.json())
+.then(data => {
+    if (data.error) {
+        document.getElementById("ticketDetails").innerHTML = "Ticket not found";
+        return;
+    }
+
+    document.getElementById("ticketDetails").innerHTML = `
+        <p><strong>Ticket ID:</strong> ${data.id}</p>
+        <p><strong>Order ID:</strong> ${data.order_id}</p>
+        <p><strong>Issue:</strong> ${data.issue}</p>
+        <p><strong>Status:</strong> ${data.status}</p>
+
+        ${data.image_url ? `<img src="${data.image_url}" width="200"/>` : ""}
+
+        <p><strong>Created:</strong> ${data.created_at}</p>
+        <p><strong>Resolved:</strong> ${data.resolved_at || "Not yet"}</p>
+
+        <p><strong>Refund:</strong> ${data.refund_type || "N/A"} (${data.refund_amount || "-"})</p>
+
+        <p><strong>Note:</strong> ${data.resolution_note || "-"}</p>
+    `;
+});
+</script>
+
+{% endblock %}

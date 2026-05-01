@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="chat-container">
+
+    <div class="chat-header">
+        Track Ticket 🔍
+    </div>
+
+    <div class="track-box">
+
+        <input type="text" id="track_id" placeholder="Enter Ticket ID">
+        <button onclick="trackTicket()">Track</button>
+
+        <div id="result"></div>
+
+        <a href="/" class="track-btn">← Back to Chat</a>
+
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/track.js') }}"></script>
+
+{% endblock %}

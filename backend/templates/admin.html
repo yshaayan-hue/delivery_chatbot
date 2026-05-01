@@ -1,0 +1,125 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<style>
+body {
+    background: #f4f6f9;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logout-btn {
+    background: #ff4d4d;
+    border: none;
+    padding: 8px 12px;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.stats {
+    display: flex;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.stat-card {
+    flex: 1;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.ticket-card {
+    background: white;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.ticket-card img {
+    border-radius: 6px;
+}
+
+button {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.btn-full { background: #28a745; color: white; }
+.btn-partial { background: #ffc107; }
+.btn-reject { background: #dc3545; color: white; }
+.btn-view { background: #007bff; color: white; }
+
+.search-bar {
+    margin: 15px 0;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+</style>
+
+<div class="dashboard-header">
+    <h2>Admin Dashboard</h2>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+</div>
+
+<!-- 🔥 STATS -->
+<div class="stats">
+    <div class="stat-card">
+        <h3 id="total">0</h3>
+        <p>Total Tickets</p>
+    </div>
+    <div class="stat-card">
+        <h3 id="pending">0</h3>
+        <p>Pending</p>
+    </div>
+    <div class="stat-card">
+        <h3 id="resolved">0</h3>
+        <p>Resolved</p>
+    </div>
+</div>
+
+<!-- 🔍 SEARCH -->
+<div class="search-bar">
+    <input 
+        type="text" 
+        id="searchInput" 
+        placeholder="Search by Order ID..."
+        onkeyup="filterTickets()"
+    >
+</div>
+
+<!-- 📦 TICKETS -->
+<div id="dashboard"></div>
+
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+
+<script>
+function logout() {
+    fetch("/api/auth/logout", { method: "POST" })
+    .then(() => {
+        window.location.href = "/admin";
+    });
+}
+</script>
+
+{% endblock %}
